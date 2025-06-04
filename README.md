@@ -63,3 +63,8 @@ This project allows:
 ## 🤝 Contributions & Feedback
 
 Feel free to fork this project or open issues to suggest improvements. Your feedback is welcome!
+
+## 🧑‍💻 Author
+
+Azizbek Utkirovich  
+[GitHub Profile](https://github.com/Azizbekutkirovich)
