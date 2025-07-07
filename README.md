@@ -52,6 +52,8 @@ composer install
 php yii migrate
 php yii serve
 
+```
+
 ## 📁 Related Projects
 
 - [Quiz-School Teacher Panel](https://github.com/Azizbekutkirovich/Quiz-school-teacher) – For teachers to upload and track tests.
