@@ -3,13 +3,33 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use app\models\LoginForm;
-use app\models\TeacherForm;
-use app\models\Signup;
-use app\excel\SimpleXLSX;
+use app\models\Register;
 
 class MainController extends Controller
 {
+	public function behaviors() {
+		return [
+			'access' => [
+				"class" => AccessControl::class,
+                'only' => ['index', 'login', 'register', 'logout', 'about', 'settings'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'about', 'settings', 'logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['login', 'register'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+			],
+		];
+	}
+
 	public function beforeAction($action) {
 		Yii::$app->view->registerJs("sessionStorage.clear();");
 		if (Yii::$app->session->has('selected')) {
@@ -19,17 +39,10 @@ class MainController extends Controller
 	}
 
 	public function actionIndex() {
-		if (!Yii::$app->user->isGuest) {
-			return $this->render("index");
-		} else {
-			return $this->redirect(['main/login']);
-		}
+		return $this->render("index");
 	}
 
 	public function actionLogin() {
-		if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
         $this->layout = "login";
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -50,11 +63,8 @@ class MainController extends Controller
     }
 
 	public function actionRegister() {
-		if (!Yii::$app->user->isGuest) {
-			return $this->goHome();
-		}
 		$this->layout = "login";
-		$model = new Signup();
+		$model = new Register();
 
 		if ($model->load(Yii::$app->request->post())) {
 			if (strlen($model->name) < 3) {
@@ -83,16 +93,10 @@ class MainController extends Controller
 	}
 
 	public function actionAbout() {
-		if (Yii::$app->user->isGuest) {
-			return $this->goHome();
-		}
 		return $this->render("about");
 	}
 
 	public function actionSettings() {
-		if (Yii::$app->user->isGuest) {
-			return $this->goBack();
-		}
 		return $this->render("settings");
 	}
 

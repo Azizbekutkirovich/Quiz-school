@@ -154,3 +154,8 @@ body{
   background-color: #FEEFB3;
   background-image: url('http://localhost/quiz-school/images/login_or_password_error.png');
 }
+#loginform-login,
+#loginform-password {
+    height: 2.8rem !important;
+    box-sizing: border-box;
+}
