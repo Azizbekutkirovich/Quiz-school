@@ -1,18 +1,6 @@
 <?php
 	use yii\helpers\Url;
-  // use yii\widgets\Pjax;
-  // $ans = "";
-  // for ($i = 0; $i < 4; $i++)  {
-  //   $ans .= $i.',';
-  // }
-  // echo $ans;
-  // die;
-  // $content = "1, 2";
-  // $num = 1;
-  // $ans = $num.",";
-  // $num2 = 2;
-  // $ans1 = $num2.",";
-  // $content = $ans.$ans1;
+  $this->title = "Quiz-school.uz"
 ?>
 <div class="container">
 	<h3 style="text-align: center; margin-top: 10vw;">Xush kelibsiz <span style="color: red;"><?=Yii::$app->user->identity->surname?> <?=Yii::$app->user->identity->name?></span></h3>

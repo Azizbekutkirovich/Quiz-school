@@ -13,7 +13,6 @@
           <div class="col_half">
             <label>Login</label>
             <div class="input_field">
-              <!-- <input type="text" name="login" id="login" placeholder="Login o'ylab toping" required/> -->
               <?=$f->field($model, 'login')->textInput(['placeholder' => "Login o'ylab toping"])->label(false);?>
             </div>
           </div>
@@ -76,7 +75,7 @@
           </div>
         </div>
         <?php
-          echo Html::submitButton("Kirish", ['class' => 'rg', 'style' => 'background-color: orange; width: 100%;']);
+          echo Html::submitButton("Ro'yxatdan o'tish", ['class' => 'rg', 'style' => 'background-color: orange; width: 100%;']);
         ?>
         <h3>Agar ro'yxatdan o'tgan bo'lsangiz quyidagi login linkiga bosing! <a href="<?=Url::to(['main/login'])?>" style="margin-top: 20px; width: 100%;">Login</a></h3>
       <?php ActiveForm::end(); ?>

@@ -53,6 +53,7 @@ class Register extends Model
         $user->setPassword($this->password);
         return $user->create();
     }
+    return false;
   }
 
   public function signup(){

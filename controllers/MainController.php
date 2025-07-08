@@ -30,6 +30,15 @@ class MainController extends Controller
 		];
 	}
 
+	public function actions() {
+		return [
+			"error" => [
+				"class" => 'yii\web\ErrorAction',
+				'layout' => 'error'
+			]
+		];
+	}
+
 	public function beforeAction($action) {
 		Yii::$app->view->registerJs("sessionStorage.clear();");
 		if (Yii::$app->session->has('selected')) {
@@ -66,26 +75,12 @@ class MainController extends Controller
 		$this->layout = "login";
 		$model = new Register();
 
-		if ($model->load(Yii::$app->request->post())) {
-			if (strlen($model->name) < 3) {
-				Yii::$app->session->setFlash("error", "Ismingiz kamida 3ta harfdan iborat bo'lishi lozim!");
-				return $this->render("register", compact("model"));
-			}
-			if (strlen($model->surname) < 5) {
-				Yii::$app->session->setFlash("error", "Familyangiz kamida 5ta harfdan iborat bo'lishi lozim!");
-				return $this->render("register", compact("model"));
-			}
-			if (strlen((string)$model->password) < 4) {
-				Yii::$app->session->setFlash("error", "Parol kamida 4ta belgidan iborat bo'lishi kerak!");
-				return $this->render("register", compact("model"));
-			}
-			if ($model->signup()) {
-				$login = new LoginForm();
-				$login->login = $model->login;
-				$login->password = $model->password;
-				if ($login->login()) {
-					return $this->redirect(['main/index']);
-				}
+		if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+			$login = new LoginForm();
+			$login->login = $model->login;
+			$login->password = $model->password;
+			if ($login->login()) {
+				return $this->redirect(['main/index']);
 			}
 		}
 
@@ -98,12 +93,5 @@ class MainController extends Controller
 
 	public function actionSettings() {
 		return $this->render("settings");
-	}
-
-	public function actionError() {
-		$error = Yii::$app->response->statusCode;
-		if ($error === 404) {
-			return $this->render('error404');
-		}
 	}
 }
