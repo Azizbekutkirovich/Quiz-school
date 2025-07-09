@@ -51,7 +51,7 @@ class Register extends Model
         $user->surname = $this->surname;
         $user->class = $this->class;
         $user->setPassword($this->password);
-        return $user->create();
+        return $user->save();
     }
     return false;
   }

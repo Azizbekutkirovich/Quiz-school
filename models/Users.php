@@ -37,10 +37,6 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
-    public function create() {
-        return $this->save();
-    }
-
     /**
      * {@inheritdoc}
      */
