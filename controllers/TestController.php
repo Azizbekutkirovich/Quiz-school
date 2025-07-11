@@ -1,21 +1,33 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\models\Questions;
-use app\models\UsersBtd;
+use app\models\Tests;
 use app\models\UserDt;
 use app\models\GetTest;
 use yii\web\Controller;
+use yii\filters\AccessControl;
 use app\excel\SimpleXLSX;
 
 class TestController extends Controller
 {
+	public function behaviors() {
+		return [
+			"access" => [
+				"class" => AccessControl::class,
+				"only" => ["gettest", "endtest", "selecttest"],
+				"rules" => [
+					[
+						"actions" => ["gettest", "endtest", "selecttest"],
+						"allow" => true,
+						"roles" => ["@"] 
+					]
+				]
+			]
+		];
+	}
+
 	public function beforeAction($action)
     {
-    	if (Yii::$app->user->isGuest) {
-			return $this->goHome();
-		}
-        Yii::$app->view->registerJs('sessionStorage.clear();');
         $actionName = Yii::$app->controller->action->id;
         if ($actionName !== 'gettest' && $actionName !== 'endtest') {
         	if (Yii::$app->session->has('selected')) {
@@ -26,16 +38,11 @@ class TestController extends Controller
         return parent::beforeAction($action);
     }
 
-	public function actionGettest() {
+	public function actionGettest(int $test_id, int $test_num) {
 		$model = new GetTest();
-		$question_id = Yii::$app->request->get("question_id");
-		$question_num = Yii::$app->request->get("question_num");
-		if (empty($question_id) || empty($question_num) || !is_numeric($question_num) || $question_num[0] === '0') {
-			return $this->redirect(['main/index']);
-		}
-		$question = Questions::findOne(['id' => $question_id]);
-		if (!empty($question)) {
-			$src = "./../web/tests/".$question->name;
+		$test = Tests::findOne(['id' => $test_id]);
+		if (!empty($test)) {
+			$src = "./../web/tests/".$test->name;
 			$excel = SimpleXLSX::parse($src);
 			$rows = $excel->rows();
 			$start = 0;
@@ -47,38 +54,38 @@ class TestController extends Controller
 		} else {
 			return $this->redirect(['main/index']);
 		}
-		$count_questions = $rows[count($rows) - 1][0];
+		$count_tests = $rows[count($rows) - 1][0];
 		if (empty($_SESSION['selected'])) {
 			$_SESSION['selected'] = [];
-			$_SESSION['selected']['question_id'] = $question_id;
+			$_SESSION['selected']['test_id'] = $test_id;
 		}
 		if ($model->load(Yii::$app->request->post())) {
 			$post = Yii::$app->request->post();
 			$user_ans = $post['GetTest']['options'];
-			$selectqnum = $question_num;
+			$selected_test_number = $test_num;
 			if ($user_ans === '') {
 				$user_ans = 'k';
 			}
-			$_SESSION['selected'][$selectqnum] = $user_ans;
-			if ($selectqnum == $count_questions) {
+			$_SESSION['selected'][$selected_test_number] = $user_ans;
+			if ($selected_test_number == $count_tests) {
 				return $this->redirect(['test/endtest']);
 			} else {
-				$question_num = $selectqnum + 1;
-				return $this->redirect(['test/gettest', 'question_id' => $question_id, 'question_num' => $question_num]);
+				$test_num = $selected_test_number + 1;
+				return $this->redirect(['test/gettest', 'test_id' => $test_id, 'test_num' => $test_num]);
 			}
 		} else {
-			$test_name = $question->test_name;
-			$time = $question->time;
-			if ($question_num > $count_questions) {
+			$test_name = $test->test_name;
+			$time = $test->time;
+			if ($test_num > $count_tests) {
 				return $this->redirect(['main/index']);
 			}
-			$question_num_new = $start + $question_num - 1;
+			$test_num_new = $start + $test_num - 1;
 			return $this->render("test", [
 				'rows' => $rows,
 				'start' => $start,
-				'question_num_new' => $question_num_new,
-				'question_num' => $question_num,
-				'question_id' => $question_id,
+				'test_num_new' => $test_num_new,
+				'test_num' => $test_num,
+				'test_id' => $test_id,
 				'test_name' => $test_name,
 				'time' => $time,
 				'model' => $model
@@ -90,10 +97,10 @@ class TestController extends Controller
 		if (empty($_SESSION['selected'])) {
 			return $this->goBack();
 		}
-		$question_id = $_SESSION['selected']['question_id'];
+		$test_id = $_SESSION['selected']['test_id'];
 		$user_dt = new UserDt();
-		$question = Questions::findOne(['id' => $question_id]);
-		$src = "./../web/tests/".$question->name;
+		$test = tests::findOne(['id' => $test_id]);
+		$src = "./../web/tests/".$test->name;
 		$excel = SimpleXLSX::parse($src);
 		$rows = $excel->rows();
 		$correct = "";
@@ -126,12 +133,12 @@ class TestController extends Controller
 			$wrong = "Barchasi to'g'ri!";
 		}
 		$user_dt->user_id = Yii::$app->user->id;
-		$user_dt->question_id = $question_id;
+		$user_dt->test_id = $test_id;
 		$user_dt->correct = $correct;
 		$user_dt->wrong = $wrong;
 		$user_dt->selected = $selected;
 		if ($user_dt->save()) {
-			return $this->redirect(['users/testinfo', 'info' => $user_dt->id]);
+			return $this->redirect(['users/detail-result', 'info' => $user_dt->id]);
 		}
 	}
 
@@ -139,7 +146,7 @@ class TestController extends Controller
 		if (empty(Yii::$app->request->get("sciense"))) {
 			return $this->goHome();
 		}
-		$tests = Questions::find()
+		$tests = Tests::find()
 			->asArray()
 			->where([
 				'school' => Yii::$app->user->identity->school,

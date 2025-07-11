@@ -31,26 +31,10 @@ class UserDt extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'question_id', 'correct', 'wrong', 'selected'], 'required'],
-            [['user_id', 'question_id'], 'integer'],
+            [['user_id', 'test_id', 'correct', 'wrong', 'selected'], 'required'],
+            [['user_id', 'test_id'], 'integer'],
             [['date'], 'safe'],
             [['correct', 'wrong', 'selected'], 'string', 'max' => 300],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'user_id' => 'User ID',
-            'question_id' => 'Question ID',
-            'correct' => 'Correct',
-            'wrong' => 'Wrong',
-            'selected' => 'Selected',
-            'date' => 'Date',
         ];
     }
 }

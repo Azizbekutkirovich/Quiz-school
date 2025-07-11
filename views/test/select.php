@@ -24,7 +24,7 @@
 	        	<h3 style="color: white; display: block;"><?=$tests[$i]['test_name']?></h3>
 	        	<!-- <br><br>
 	        	<div> -->
-	        		<a href="<?=Url::to(['test/gettest', 'question_id' => $tests[$i]['id'], 'question_num' => 1])?>" class="btn btn-danger">Testni boshlash</a>
+	        		<a href="<?=Url::to(['test/gettest', 'test_id' => $tests[$i]['id'], 'test_num' => 1])?>" class="btn btn-danger">Testni boshlash</a>
 	        	<!-- </div> -->
 	        </div>
       	</div>
