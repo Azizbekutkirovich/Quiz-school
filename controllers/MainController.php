@@ -82,6 +82,8 @@ class MainController extends Controller
 			if ($login->login()) {
 				return $this->redirect(['main/index']);
 			}
+			Yii::$app->session->setFlash("login-error-in-reg-action", "Ro'yxatdan o'tish muvofaqayatli amalga oshirildi. Faqat tizimga kirishda muammo yuzaga keldi! Login va parolni kiritib tizimga kiring");
+			return $this->redirect(['main/login']);
 		}
 
 		return $this->render("register", compact("model"));

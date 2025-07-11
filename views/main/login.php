@@ -2,10 +2,14 @@
   use yii\helpers\Url;
   use yii\helpers\Html;
   use yii\bootstrap5\ActiveForm;
+  $this->title = "Login";
 ?>
 <div class="form_wrapper">
   <div class="form_container" id="title">
     <div class="title_container">
+      <?php if (Yii::$app->session->hasFlash("login-error-in-reg-action")): ?>
+        <h1 class="alert alert-danger"><?=Yii::$app->session->getFlash("login-error-in-reg-action");?></h1>
+        <?php endif; ?>
       <h2><span style="color: orange;">Quiz school</span> platformasiga kirish</h2>
     </div>
     <?php $f = ActiveForm::begin(); ?>

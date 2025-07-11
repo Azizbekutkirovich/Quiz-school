@@ -2,11 +2,12 @@
   use yii\helpers\Url;
   use yii\helpers\Html;
   use yii\bootstrap5\ActiveForm;
+  $this->title = "Ro'yxatdan o'tish";
 ?>
 <div class="form_wrapper">
     <div class="form_container" id="title">
       <div class="title_container">
-        <h2><span style="color: orange;">Quiz school</span> platformasiga ro'yhatdan o'tish</h2>
+        <h2><span style="color: orange;">Quiz school</span> platformasiga ro'yxatdan o'tish</h2>
       </div>
       <?php $f = ActiveForm::begin(); ?>
         <div class="row clearfix">
@@ -21,14 +22,12 @@
             <div class="input_field">
               <?=$f->field($model, 'name')->textInput(['placeholder' => "Ismingizni kiriting"])->label(false);?>
             </div>
-            <p id="text_n"></p>
           </div>
           <div class="col_half">
             <label>Familiya</label>
             <div class="input_field">
               <?=$f->field($model, 'surname')->textInput(['placeholder' => "Familya kiriting"])->label(false);?>
             </div>
-            <p id="text_s"></p>
           </div>
           <div class="col_half">
             <label>Maktabni tanlang</label>
@@ -45,7 +44,6 @@
                 '13' => '13-maktab'
               ],['prompt'=>'Tanlang'])->label(false);?>
             </div>
-            <p id="text_sch"></p>
           </div>
           <div class="col_half">
             <labeL>Sinfingizni tanlang</label>
@@ -64,7 +62,6 @@
                 '11' => '11-sinf',
               ],['prompt'=>'Tanlang'])->label(false);?>
             </div>
-            <p id="text_c"></p>
           </div>
           <div class="col_half">
             <label>Parol</label>

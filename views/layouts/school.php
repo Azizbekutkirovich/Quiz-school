@@ -51,7 +51,7 @@
     </div> -->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="<?=Url::home()?>" class="nav__logo"><span style="color: gold;">Zarafshon</span><span style="color: red;">-test</span>.uz</a>
+            <a href="<?=Url::home()?>" class="nav__logo"><span style="color: gold;">Quiz</span><span style="color: red;">-school</span>.uz</a>
 
             <div class="nav__menu">
                 <ul class="nav__list">

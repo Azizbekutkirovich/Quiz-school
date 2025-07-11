@@ -1,5 +1,5 @@
 body{
-  background-image: url(https://img.freepik.com/free-vector/modern-hand-drawn-education-concept_23-2147906438.jpg?w=2000);
+  background-image: url('./../images/login-background.avif');
   background-size: cover;
 }
 .clearfix:after {

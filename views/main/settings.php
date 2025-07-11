@@ -1,6 +1,6 @@
 <?php
   use yii\helpers\Url;
-
+  $this->title = "Sozlamalar";
 ?>
 <div class="container" style="margin-top: 100px;">
   <h2 class="text-center">Sozlamalar</h2>
@@ -11,23 +11,21 @@
                 <h5>Shaxsiy ma'lumotlar</h5>
             </div>
             <div class="card-body">
-                <form>
-                    <div class="form-group">
-                        <label class="form-label">Login: <?=Yii::$app->user->identity->login?></label>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Ism: <?=Yii::$app->user->identity->name?></label>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Familya: <?=Yii::$app->user->identity->surname?></label>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Maktab: <?=Yii::$app->user->identity->school?></label>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Sinf: <?=Yii::$app->user->identity->class?></label>
-                    </div>
-                </form>
+                <div>
+                    <p>Login: <?=Yii::$app->user->identity->login?></p>
+                </div>
+                <div>
+                    <p>Ism: <?=Yii::$app->user->identity->name?></p>
+                </div>
+                <div>
+                    <p>Familya: <?=Yii::$app->user->identity->surname?></p>
+                </div>
+                <div>
+                    <p>Maktab: <?=Yii::$app->user->identity->school?></p>
+                </div>
+                <div>
+                    <p>Sinf: <?=Yii::$app->user->identity->class?></p>
+                </div>
             </div>
         </div>
     </div>

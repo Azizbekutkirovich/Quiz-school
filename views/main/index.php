@@ -4,7 +4,7 @@
 ?>
 <div class="container">
 	<h3 style="text-align: center; margin-top: 10vw;">Xush kelibsiz <span style="color: red;"><?=Yii::$app->user->identity->surname?> <?=Yii::$app->user->identity->name?></span></h3>
-	<h4 style="text-align: center;">Siz qaysi <span style="color: orange;">fan</span>dan test ishlashni xohlaysiz</h4>
+	<h4 style="text-align: center;">Siz qaysi <span style="color: orange;">fan</span>dan test ishlashni xohlaysiz?</h4>
 	<div class="row">
       <a class="four col-md-6" href="<?=Url::to(['test/selecttest', 'sciense' => 'matematika'])?>" id="matem" type="submit" style="margin-top: 30px;">
         <div class="counter-box" style="background-color: #34568b; border-radius: 20px;">
