@@ -22,7 +22,11 @@ $config = [
             'baseUrl' => '/quiz-school'
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\MemCache',
+            'useMemcached' => true,
+            'servers' => [
+                ['host' => '127.0.0.1', 'port' => 11211, 'weight' => 100],
+            ],
         ],
         'user' => [
             'identityClass' => 'app\models\Users',
@@ -52,6 +56,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                "test/<test_id:\d+>/<test_num:\d+>" => "test/gettest",
+                "test/<sciense:[^/]+>" => "test/selecttest",
+                "users/detail-result/<info:\d+>" => "users/detail-result"
             ],
         ],
     ],
