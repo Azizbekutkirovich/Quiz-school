@@ -6,7 +6,7 @@ use app\models\UserDt;
 use app\models\GetTest;
 use yii\web\Controller;
 use yii\filters\AccessControl;
-use app\excel\SimpleXLSX;
+use app\excel\TestParser;
 
 class TestController extends Controller
 {
@@ -44,14 +44,7 @@ class TestController extends Controller
 		if (empty($test)) {
 			return $this->redirect(['main/index']);
 		}
-		$parsing_cache_key = "cache_".$test->name;
-		$rows = json_decode(Yii::$app->cache->get($parsing_cache_key));
-		if (!isset($rows)) {
-			$src = "./../web/tests/".$test->name;
-			$excel = SimpleXLSX::parse($src);
-			$rows = $excel->rows();
-			Yii::$app->cache->set($parsing_cache_key, json_encode($rows), 3600);
-		}
+		$rows = TestParser::getParsedData($test->name);
 		$start = 0;
 		for ($i = 0; $i < count($rows); $i++) {
 			if ($rows[$i][0] == 'T/r' || $rows[$i][0] == '№') {
@@ -104,14 +97,7 @@ class TestController extends Controller
 		$test_id = $_SESSION['selected']['test_id'];
 		$user_dt = new UserDt();
 		$test = Tests::findOne(['id' => $test_id]);
-		$parsing_cache_key = "cache_".$test->name;
-		$rows = json_decode(Yii::$app->cache->get($parsing_cache_key));
-		if (!isset($rows)) {
-			$src = "./../web/tests/".$test->name;
-			$excel = SimpleXLSX::parse($src);
-			$rows = $excel->rows();
-			Yii::$app->cache->set($parsing_cache_key, json_encode($rows), 3600);
-		}
+		$rows = TestParser::getParsedData($test->name);
 		$correct = "";
 		$wrong = "";
 		$selected = "";

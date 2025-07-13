@@ -25,7 +25,12 @@ $config = [
             'class' => 'yii\caching\MemCache',
             'useMemcached' => true,
             'servers' => [
-                ['host' => '127.0.0.1', 'port' => 11211, 'weight' => 100],
+                [
+                    'host' => '127.0.0.1', 
+                    'port' => 11211, 
+                    'weight' => 100,
+                    'persistent' => true
+                ],
             ],
         ],
         'user' => [
@@ -33,6 +38,11 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['main/login']
         ],
+        // 'session' => [
+        //     'class' => 'yii\web\Session',
+        //     'timeout' => 3600,
+        //     'savePath' => '@runtime/session', // yoki memcached
+        // ],
         'errorHandler' => [
             'errorAction' => 'main/error',
         ],
@@ -57,7 +67,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 "test/<test_id:\d+>/<test_num:\d+>" => "test/gettest",
-                "test/<sciense:[^/]+>" => "test/selecttest",
+                "test/select-test/<sciense:[^/]+>" => "test/selecttest",
                 "users/detail-result/<info:\d+>" => "users/detail-result"
             ],
         ],

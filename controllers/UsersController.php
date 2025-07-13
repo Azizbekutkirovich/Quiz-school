@@ -5,7 +5,7 @@ use Yii;
 use app\models\Tests;
 use app\models\UserDt;
 use yii\web\Controller;
-use app\excel\SimpleXLSX;
+use app\excel\TestParser;
 use yii\filters\AccessControl;
 
 class UsersController extends Controller
@@ -42,14 +42,7 @@ class UsersController extends Controller
 			return $this->goBack();
 		}
 		$test = Tests::findOne(['id' => $info->test_id]);
-		$cache_key = "cache_".$test->name;
-		$rows = json_decode(Yii::$app->cache->get($cache_key));
-		if (!isset($rows)) {
-			$src = "./../web/tests/".$test->name;
-			$excel = SimpleXLSX::parse($src);
-			$rows = $excel->rows();
-			Yii::$app->cache->set($cache_key, json_encode($rows), 3600);
-		}
+		$rows = TestParser::getParsedData($test->name);
 		$start = 0;
 		for ($i = 0; $i < count($rows); $i++) {
 			if ($rows[$i][0] == 'T/r' || $rows[$i][0] == '№' || $rows[$i][0] == 'TP') {
