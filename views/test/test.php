@@ -2,6 +2,7 @@
 	use yii\helpers\Url;
 	use yii\helpers\Html;
 	use yii\bootstrap5\ActiveForm;
+	$this->title = $test_name;
 ?>
 <div class="container" style="margin-top: 100px;">
 	<div class="alert alert-secondary" style="text-align: center;">

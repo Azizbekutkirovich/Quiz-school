@@ -1,4 +1,5 @@
 <?php
+	$this->title = "Batafsil ma'lumot";
 	$correct = $info->correct !== 'Barchasi xato!' ? explode(",", $info->correct) : 0;
 	$wrong = $info->wrong !== "Barchasi to'g'ri!" ? explode(",", $info->wrong) : 0;
 	$selected = explode(",", $info->selected);

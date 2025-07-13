@@ -1,3 +1,6 @@
+<?php
+    $this->title = "Biz haqimizda";
+?>
 <div class="container" style="margin-top: 100px;">
   <div class="col-sm-4 mx-auto text-center">
     <h3>Platforma asoschisi: </h3>

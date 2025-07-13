@@ -151,18 +151,18 @@ class TestController extends Controller
 		}
 	}
 
-	public function actionSelecttest() {
-		if (empty(Yii::$app->request->get("sciense"))) {
-			return $this->goHome();
-		}
+	public function actionSelecttest($sciense) {
 		$tests = Tests::find()
 			->asArray()
 			->where([
 				'school' => Yii::$app->user->identity->school,
 				'class' => Yii::$app->user->identity->class,
-				'job' =>  Yii::$app->request->get("sciense"),
+				'job' =>  $sciense,
 			])
 			->all();
-		return $this->render("select", compact("tests"));
+		return $this->render("select", [
+			"tests" => $tests,
+			"sciense" => $sciense
+		]);
 	}
 }

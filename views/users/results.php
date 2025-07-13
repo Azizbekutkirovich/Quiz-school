@@ -2,6 +2,7 @@
 	use yii\helpers\Url;
 	use app\models\Tests;
 	use app\models\Teachers;
+	$this->title = "Mening natijalarim";
 ?>
 <div class="container" style="margin-top: 100px;">
 	<?php if (!empty($info)): ?>

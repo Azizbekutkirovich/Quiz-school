@@ -1,13 +1,7 @@
 <?php
 	use yii\helpers\Url;
 	use app\models\Teachers;
-    // echo '<pre>';
-    //     print_r($tests);
-    // echo '</pre>';
-    // for ($i = count($tests) - 1; $i >= 0; $i--) {
-    //     echo $tests[$i]['id'];
-    // }
-    // die;
+    $this->title = $sciense;
 ?>
 <div class="container" style="margin-top: 100px;">
 	<?php if (!empty($tests)): ?>
