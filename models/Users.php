@@ -32,8 +32,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['login', 'school', 'name', 'surname', 'class', 'password'], 'required'],
             [['school', 'class'], 'integer'],
             [['login', 'name', 'surname', 'password'], 'string', 'max' => 255],
-            ['login', 'unique', 'message' => 'Bu login band!'],
-            ['password', 'unique', 'message' => "Bu parol band! Boshqa parol kiriting!"]
+            ['login', 'unique', 'message' => 'Bu login band!']
         ];
     }
 

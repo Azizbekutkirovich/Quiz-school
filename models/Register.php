@@ -21,8 +21,7 @@ class Register extends Model
           ['login', 'unique', 'targetClass' => '\app\models\Users', 'message' => 'Bu login band!'],
           ['login', 'string', 'min' => 6, "tooShort" => "Login kamida 6ta belgidan iborat bo'lishi kerak!"],
           ['password', 'string', 'min' => 8, "tooShort" => "Parol kamida 8ta belgidan iborat bo'lishi kerak!"],
-          ['password', 'match',  'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/', 'message' => 'Parolda katta harf, kichik harf, va raqam bo‘lishi shart!'],
-          ['password', 'unique', 'targetClass' => '\app\models\Users', 'message' => "Bu parol band! Boshqa parol kiriting!"],
+          ['password', 'match',  'pattern' => '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/', 'message' => 'Parolda katta harf, kichik harf, va raqam bo‘lishi shart!']
       ];
   }
 

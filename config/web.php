@@ -22,15 +22,11 @@ $config = [
             'baseUrl' => '/quiz-school'
         ],
         'cache' => [
-            'class' => 'yii\caching\MemCache',
-            'useMemcached' => true,
-            'servers' => [
-                [
-                    'host' => '127.0.0.1', 
-                    'port' => 11211, 
-                    'weight' => 100,
-                    'persistent' => true
-                ],
+            'class' => 'yii\redis\Cache',
+            'redis' => [
+                'hostname' => '127.0.0.1',
+                'port' => 6379,
+                'database' => 0,
             ],
         ],
         'user' => [
@@ -38,11 +34,6 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['main/login']
         ],
-        // 'session' => [
-        //     'class' => 'yii\web\Session',
-        //     'timeout' => 3600,
-        //     'savePath' => '@runtime/session', // yoki memcached
-        // ],
         'errorHandler' => [
             'errorAction' => 'main/error',
         ],
