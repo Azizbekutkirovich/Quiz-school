@@ -120,10 +120,5 @@
 
 	window.addEventListener('popstate', function() {
 	    sessionStorage.removeItem('timeLeft<?=$test_id?>');
-	});	
-
-	window.addEventListener("beforeunload", function (e) {
-        e.preventDefault();
-        e.returnValue = '';
-    });
+	});
 </script>
