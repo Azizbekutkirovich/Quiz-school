@@ -2,12 +2,11 @@
 namespace app\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
 use app\models\Register;
 
-class MainController extends Controller
+class MainController extends AppController
 {
 	public function behaviors() {
 		return [
@@ -37,14 +36,6 @@ class MainController extends Controller
 				'layout' => 'error'
 			]
 		];
-	}
-
-	public function beforeAction($action) {
-		Yii::$app->view->registerJs("sessionStorage.clear();");
-		if (Yii::$app->session->has('selected')) {
-			Yii::$app->session->remove('selected');
-		}
-		return parent::beforeAction($action);
 	}
 
 	public function actionIndex() {

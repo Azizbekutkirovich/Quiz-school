@@ -4,11 +4,10 @@ namespace app\controllers;
 use Yii;
 use app\models\Tests;
 use app\models\UserDt;
-use yii\web\Controller;
 use app\excel\TestParser;
 use yii\filters\AccessControl;
 
-class UsersController extends Controller
+class UsersController extends AppController
 {
 	public function behaviors() {
 		return [

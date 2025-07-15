@@ -59,7 +59,8 @@ $config = [
             'rules' => [
                 "test/<test_id:\d+>/<test_num:\d+>" => "test/gettest",
                 "test/select-test/<sciense:[^/]+>" => "test/selecttest",
-                "users/detail-result/<info:\d+>" => "users/detail-result"
+                "users/detail-result/<info:\d+>" => "users/detail-result",
+                "api/clear-selec" => "main/clearselected"
             ],
         ],
     ],
