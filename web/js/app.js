@@ -16,6 +16,6 @@ if (document.URL == "http://localhost/quiz-school/") {
     $('#home').addClass('active-link');
 } else if (document.URL == "http://localhost/quiz-school/main/settings") {
     $('#about').addClass('active-link');
-} else if (document.URL == "http://localhost/quiz-school/users/select") {
+} else if (document.URL == "http://localhost/quiz-school/users/results") {
     $('#info').addClass('active-link');
 }
