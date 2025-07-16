@@ -26,18 +26,6 @@ class TestController extends Controller
 		];
 	}
 
-	public function beforeAction($action)
-    {
-    	Yii::$app->view->registerJs("sessionStorage.clear();");
-        $actionName = Yii::$app->controller->action->id;
-        if ($actionName !== 'gettest' && $actionName !== 'endtest') {
-        	if (Yii::$app->session->has('selected')) {
-	    		Yii::$app->session->remove('selected');
-			}
-        }
-        return parent::beforeAction($action);
-    }
-
     public function actionTest(int $test_id) {
     	$model = new UserAnswers();
     	$test = Tests::findOne(['id' => $test_id]);
