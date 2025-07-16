@@ -6,8 +6,9 @@ use app\models\Tests;
 use app\models\UserDt;
 use app\excel\TestParser;
 use yii\filters\AccessControl;
+use yii\web\Controller;
 
-class UsersController extends AppController
+class UsersController extends Controller
 {
 	public function behaviors() {
 		return [
@@ -23,14 +24,6 @@ class UsersController extends AppController
 				]
 			]
 		];	
-	}
-
-	public function beforeAction($action) {
-		Yii::$app->view->registerJs("sessionStorage.clear();");
-		if (Yii::$app->session->has('selected')) {
-			Yii::$app->session->remove('selected');
-		}
-		return parent::beforeAction($action);
 	}
 
 	public function actionDetailResult($info) {

@@ -62,6 +62,50 @@
         </nav>
     </header>
     <?=$content?>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const currentPath = window.location.pathname;
+
+          // Faqat test sahifasi bo'lsa ishlaydi
+          const match = currentPath.match(/\/quiz-school\/test\/(\d+)/);
+          const currentTestId = match ? match[1] : null;
+
+          if (!currentTestId) return; // Test ID topilmasa — hech nima qilmaymiz
+
+          // Eski test IDni olib tekshiramiz
+          const savedTestId = localStorage.getItem('active_test_id');
+          if (savedTestId && savedTestId !== currentTestId) {
+            // Agar boshqa testga o‘tsa (masalan 30 -> 31), localStorage tozalanadi
+            clearQuizStorage();
+          }
+
+          // Hozirgi test IDni saqlab qo'yamiz
+          localStorage.setItem('active_test_id', currentTestId);
+
+          // Boshqa sahifaga chiqib ketayotganini ushlash
+          window.addEventListener('beforeunload', (e) => {
+            const nextUrl = document.activeElement?.href || '';
+            if (!nextUrl.includes(`/quiz-school/test/${currentTestId}`)) {
+              clearQuizStorage();
+            }
+          });
+
+          // LocalStorage tozalovchi funksiya
+          function clearQuizStorage() {
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+              const key = localStorage.key(i);
+              if (
+                key &&
+                (key.startsWith('UserAnswers[answers]') || key === 'quiz_timer_seconds')
+              ) {
+                keysToRemove.push(key);
+              }
+            }
+            keysToRemove.forEach(k => localStorage.removeItem(k));
+          }
+        });
+    </script>
 <?php $this->endBody(); ?>
 </body>
 </html>

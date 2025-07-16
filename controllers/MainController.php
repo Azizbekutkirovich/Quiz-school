@@ -2,11 +2,12 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
 use app\models\Register;
 
-class MainController extends AppController
+class MainController extends Controller
 {
 	public function behaviors() {
 		return [
