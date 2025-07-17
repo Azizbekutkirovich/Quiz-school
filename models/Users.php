@@ -66,14 +66,14 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by username
+     * Finds user by login
      *
-     * @param string $username
+     * @param string $login
      * @return static|null
      */
     public static function findByLogin($login)
     {
-        return self::findOne(['login' => $login]);
+        return self::find()->where(['login' => $login])->select(["id", "login", "password"])->one();
     }
 
     /**

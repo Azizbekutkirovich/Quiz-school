@@ -54,7 +54,7 @@ class UsersController extends Controller
 		$info = UserDt::find()
 			->asArray()
 			->where([
-				'user_id' => Yii::$app->user->identity->id,
+				'user_id' => Yii::$app->user->id,
 			])
 			->all();
 		return $this->render("results", compact("info"));

@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
 use app\models\Register;
+use app\models\Users;
 
 class MainController extends Controller
 {
@@ -37,6 +38,29 @@ class MainController extends Controller
 				'layout' => 'error'
 			]
 		];
+	}
+
+	public function actionLoginProfiling() {
+		$login = "Javohhh";
+		$password = "Java1234";
+		Yii::beginProfile("LoginProcess");
+
+		Yii::beginProfile("Find user by login");
+		$user = Users::findByLogin($login);
+		Yii::endProfile("Find user by login");
+
+		Yii::beginProfile("Validate password");
+		$is_valid = $user->validatePassword($password);
+		Yii::endProfile("Validate password");
+
+		Yii::beginProfile("User Login");
+		if ($is_valid) {
+			Yii::$app->user->login($user);
+		}
+		Yii::endProfile("User Login");				
+
+		Yii::endProfile("LoginProcess");
+		return $this->renderContent($is_valid ? 'Login OK' : 'Login FAIL');
 	}
 
 	public function actionIndex() {
