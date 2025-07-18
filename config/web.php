@@ -34,6 +34,10 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['main/login']
         ],
+        'security' => [
+            'class' => 'yii\base\Security',
+            'passwordHashCost' => 8,
+        ],
         'errorHandler' => [
             'errorAction' => 'main/error',
         ],

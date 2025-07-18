@@ -8,12 +8,12 @@
 	<div class="row">
 		<?php for ($i = count($tests) - 1; $i >= 0; $i--): ?>
 			<?php
-				$teacher = Teachers::findOne(['id' => $tests[$i]['teach_id']]);
+				$teacher = $teachers[$tests[$i]["teach_id"]];
 			?>
-      	<div class="four col-md-6" id="matem" style="margin-top: 30px;">
+      	<div class="four col-md-6" style="margin-top: 30px;">
 	        <div class="counter-box bget" style="border-radius: 20px;">
 	          	<i class="fa-solid fa-calculator"></i>
-	          	<p style="color: white;">Test muallifi: <span style="color: red;"><?=$teacher->surname?> <?=$teacher->name?></span></p>
+	          	<p style="color: white;">Test muallifi: <span style="color: red;"><?=$teacher['surname']?> <?=$teacher['name']?></span></p>
 	          	<p style="color: white;"><span style="color: red;"><?=$tests[$i]['date']?></span> da yuklangan</p>
 	        	<h3 style="color: white; display: block;"><?=$tests[$i]['test_name']?></h3>
 	        	<!-- <br><br>

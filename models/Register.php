@@ -25,22 +25,6 @@ class Register extends Model
       ];
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function attributeLabels()
-  {
-      return [
-          'id' => 'ID',
-          'login' => 'Login',
-          'school' => 'School',
-          'name' => 'Name',
-          'surname' => 'Surname',
-          'class' => 'Class',
-          'password' => 'Password',
-      ];
-  }
-
   protected function save() {
     if ($this->validate()) {
         $user = new Users();

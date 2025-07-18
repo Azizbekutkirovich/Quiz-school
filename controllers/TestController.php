@@ -4,6 +4,7 @@ use Yii;
 use app\models\Tests;
 use app\models\UserDt;
 use app\models\UserAnswers;
+use app\models\Teachers;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\excel\TestParser;
@@ -88,14 +89,29 @@ class TestController extends Controller
 	public function actionSelecttest($sciense) {
 		$tests = Tests::find()
 			->asArray()
+			->select(["id", "teach_id", "test_name", "date"])
 			->where([
 				'school' => Yii::$app->user->identity->school,
 				'class' => Yii::$app->user->identity->class,
 				'job' =>  $sciense,
 			])
 			->all();
+		if (empty($tests)) {
+			return $this->render("select", [
+				"tests" => $tests,
+				"sciense" => $sciense
+			]);
+		}
+		$teacher_ids = array_column($tests, "teach_id");
+		$teachers = Teachers::find()
+			->select(["id", "name", "surname"])
+			->where(["id" => $teacher_ids])
+			->indexBy("id")
+			->asArray()
+			->all();
 		return $this->render("select", [
 			"tests" => $tests,
+			"teachers" => $teachers,
 			"sciense" => $sciense
 		]);
 	}
