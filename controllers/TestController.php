@@ -20,7 +20,7 @@ class TestController extends Controller
 					[
 						"actions" => ["gettest", "endtest", "selecttest"],
 						"allow" => true,
-						"roles" => ["@"] 
+						"roles" => ["@"]
 					]
 				]
 			]
@@ -29,7 +29,10 @@ class TestController extends Controller
 
     public function actionTest(int $test_id) {
     	$model = new UserAnswers();
-    	$test = Tests::findOne(['id' => $test_id]);
+    	$test = Tests::find()
+    		->select(["name", "test_name", "time"])
+    		->where(['id' => $test_id])
+    		->one();
     	if (empty($test)) {
     		return $this->goBack();
     	}
@@ -74,7 +77,7 @@ class TestController extends Controller
 			$user_dt->selected = $selected;
 			if ($user_dt->save()) {
 				return $this->redirect(['users/detail-result', 'info' => $user_dt->id]);
-			}	
+			}
     	}
     	return $this->render("test", [
     		"model" => $model,
@@ -82,7 +85,7 @@ class TestController extends Controller
     		"start" => $start,
     		"test_name" => $test->test_name,
     		"count_tests" => $count_tests,
-    		"timer" => $test->time 
+    		"timer" => $test->time
     	]);
     }
 
