@@ -1,7 +1,7 @@
 <?php
 	$this->title = "Batafsil ma'lumot";
-	$correct = $info->correct !== 'Barchasi xato!' ? explode(",", $info->correct) : 0;
-	$wrong = $info->wrong !== "Barchasi to'g'ri!" ? explode(",", $info->wrong) : 0;
+	$correct = $info->correct !== 'Barchasi xato!,' ? explode(",", $info->correct) : 0;
+	$wrong = $info->wrong !== "Barchasi to'g'ri!," ? explode(",", $info->wrong) : 0;
 	$selected = explode(",", $info->selected);
 	$correct_count = $correct !== 0 ? count($correct) - 1 : 0;
 	$wrong_count = $wrong !== 0 ? count($wrong) - 1 : 0;
