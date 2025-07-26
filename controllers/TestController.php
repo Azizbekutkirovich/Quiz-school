@@ -62,7 +62,7 @@ class TestController extends Controller
     	]);
     }
 
-    protected function checkingAnswers(int $start, array $rows, array $answers) {
+    private function checkingAnswers(int $start, array $rows, array $answers) {
     	$correctArr = [];
     	$wrongArr = [];
     	$selectedArr = [];
@@ -90,7 +90,7 @@ class TestController extends Controller
     	];
     }
 
-    protected function saveUserResult(int $test_id, $correct, $wrong, $selected) {
+    private function saveUserResult(int $test_id, $correct, $wrong, $selected) {
     	$user_dt = new UserDt();
     	$user_dt->user_id = Yii::$app->user->id;
     	$user_dt->test_id = $test_id;

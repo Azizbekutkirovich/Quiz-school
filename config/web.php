@@ -20,7 +20,6 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'quiz-school',
             'baseUrl' => '/quiz-school',
-            // 'enableCsrfValidation' => false
         ],
         'cache' => [
             'class' => 'yii\redis\Cache',
@@ -29,6 +28,16 @@ $config = [
                 'port' => 6379,
                 'database' => 0,
             ],
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'redis' => [
+                'hostname' => '127.0.0.1',
+                'port' => 6379,
+                'database' => 1
+            ],
+            'channel' => 'queue',
+            'as log' => \yii\queue\LogBehavior::class
         ],
         'user' => [
             'identityClass' => 'app\models\Users',
