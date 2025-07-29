@@ -4,7 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'basic',
+    'id' => 'quiz-school',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -21,6 +21,9 @@ $config = [
             'cookieValidationKey' => 'quiz-school',
             'baseUrl' => '/quiz-school',
         ],
+        'session' => [
+            'name' => 'quiz-school'
+        ],
         'cache' => [
             'class' => 'yii\redis\Cache',
             'redis' => [
@@ -28,16 +31,6 @@ $config = [
                 'port' => 6379,
                 'database' => 0,
             ],
-        ],
-        'queue' => [
-            'class' => \yii\queue\redis\Queue::class,
-            'redis' => [
-                'hostname' => '127.0.0.1',
-                'port' => 6379,
-                'database' => 1
-            ],
-            'channel' => 'queue',
-            'as log' => \yii\queue\LogBehavior::class
         ],
         'user' => [
             'identityClass' => 'app\models\Users',

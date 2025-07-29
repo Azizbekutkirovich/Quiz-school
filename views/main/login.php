@@ -17,13 +17,13 @@
         <div class="col_half">
           <label>Login</label>
           <div class="input_field">
-            <?=$f->field($model, 'login')->textInput(['placeholder' => "Loginni kiriting"])->label(false);?>
+            <?=$f->field($model, 'login')->textInput()->label(false);?>
           </div>
         </div>
         <div class="col_half">
           <label>Parol</label>
           <div class="input_field">
-            <?=$f->field($model, 'password')->passwordInput(['placeholder' => "Parolni kiriting"])->label(false);?>
+            <?=$f->field($model, 'password')->passwordInput()->label(false);?>
           </div>
         </div>
       </div>

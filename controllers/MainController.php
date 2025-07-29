@@ -6,7 +6,6 @@ use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
 use app\models\Register;
-use app\models\Users;
 
 class MainController extends Controller
 {

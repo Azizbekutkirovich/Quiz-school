@@ -68,7 +68,7 @@
             <div class="input_field">
               <?=$f->field($model, 'password')->passwordInput(['placeholder' => "Parol o'ylab toping"])->label(false);?>
             </div>
-            <p id="text_pa" style="color: blue;">Parol kamida 8ta belgidan iborat bo'lishi kerak</p>
+            <p id="text_pa" style="color: blue;">Parol kamida 8ta belgidan iborat bo'lishi kerak. Parolda katta harf, kichik harf va raqam bo'lishi shart!</p>
           </div>
         </div>
         <?php
