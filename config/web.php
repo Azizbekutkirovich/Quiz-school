@@ -32,6 +32,13 @@ $config = [
                 'database' => 0,
             ],
         ],
+        'minio' => [
+            'class' => 'app\components\MinioComponent',
+            'accessKey' => 'minioadmin',
+            'secretKey' => 'minioadmin123',
+            'endpoint' => 'http://localhost:9000',
+            'bucket' => 'test-files'
+        ],
         'user' => [
             'identityClass' => 'app\models\Users',
             'enableAutoLogin' => true,

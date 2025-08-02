@@ -8,6 +8,7 @@ use app\models\Teachers;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use app\excel\TestParser;
+use app\excel\StartOfFile;
 
 class TestController extends Controller
 {
@@ -30,21 +31,15 @@ class TestController extends Controller
     public function actionTest(int $test_id) {
     	$model = new UserAnswers();
     	$test = Tests::find()
-    		->select(["name", "test_name", "time"])
+    		->select(["name", "test_name", "time", 'teach_id'])
     		->where(['id' => $test_id])
     		->one();
     	if (empty($test)) {
     		return $this->goBack();
     	}
-    	$rows = TestParser::getParsedData($test->name);
-    	$start = 0;
-    	$rows_count = count($rows);
-    	for ($i = 0; $i < $rows_count; $i++) {
-    		if ($rows[$i][0] == 'T/r' || $rows[$i][0] == '№') {
-				$start = $i + 1;
-			}
-    	}
-    	$count_tests = $rows_count - $start;
+    	$rows = TestParser::getParsedData($test->name, $test->teach_id);
+    	$start = StartOfFile::getStartOfTheTest($rows);
+    	$count_tests = count($rows) - $start;
     	if ($model->load(Yii::$app->request->post())) {
     		$data = $this->checkingAnswers($start, $rows, $model->answers);
     		$saved = $this->saveUserResult($test_id, $data["correct"], $data["wrong"], $data["selected"]);

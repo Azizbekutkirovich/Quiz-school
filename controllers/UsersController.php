@@ -8,6 +8,7 @@ use app\models\UserDt;
 use app\excel\TestParser;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use app\excel\StartOfFile;
 
 class UsersController extends Controller
 {
@@ -38,17 +39,12 @@ class UsersController extends Controller
 			return $this->goBack();
 		}
 		$test = Tests::find()
-			->select(["name", "test_name"])
+			->select(["name", "test_name", "teach_id"])
 			->where(['id' => $info->test_id])
 			->one();
 		$test_name = $test->test_name;
-		$rows = TestParser::getParsedData($test->name);
-		$start = 0;
-		for ($i = 0; $i < count($rows); $i++) {
-			if ($rows[$i][0] == 'T/r' || $rows[$i][0] == '№' || $rows[$i][0] == 'TP') {
-				$start = $i + 1;
-			}
-		}
+		$rows = TestParser::getParsedData($test->name, $test->teach_id);
+    	$start = StartOfFile::getStartOfTheTest($rows);
 		return $this->render("detail", [
 			'info' => $info,
 			'test_name' => $test_name,
