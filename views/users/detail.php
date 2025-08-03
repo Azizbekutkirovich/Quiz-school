@@ -1,4 +1,5 @@
 <?php
+	use yii\helpers\Url;
 	$this->title = "Batafsil ma'lumot";
 	$correct = $info->correct !== 'Barchasi xato!,' ? explode(",", $info->correct) : 0;
 	$wrong = $info->wrong !== "Barchasi to'g'ri!," ? explode(",", $info->wrong) : 0;
@@ -72,12 +73,12 @@
       	if (image) {
       		div1.removeChild(image)
       	}
-      	div1.innerHTML += '<img style="width: 50px; height: 50px;" src="./../../web/images/check-mark.png">';
+      	div1.innerHTML += '<img style="width: 50px; height: 50px;" src="<?=Url::base()?>/images/check-mark.png">';
     }
 
     function addFalseImage(div) {
     	var div2 = document.getElementById(div);
-    	div2.innerHTML += '<img style="width: 50px; height: 50px;" src="./../../web/images/cancel.png">';
+    	div2.innerHTML += '<img style="width: 50px; height: 50px;" src="<?=Url::base()?>/images/cancel.png">';
     }
 </script>
 <?php

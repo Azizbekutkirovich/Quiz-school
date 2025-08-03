@@ -71,9 +71,13 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                "home" => "main/index",
+                "settings" => "main/settings",
+                "about-us" => "main/about",
                 "test/<test_id:\d+>/" => "test/test",
-                "test/select-test/<sciense:[^/]+>" => "test/selecttest",
-                "users/detail-result/<info:\d+>" => "users/detail-result"
+                "select-test/<sciense:[^/]+>" => "test/selecttest",
+                "results" => "users/results",
+                "detail-result/<info:\d+>" => "users/detail-result"
             ],
         ],
     ],

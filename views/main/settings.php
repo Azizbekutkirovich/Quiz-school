@@ -36,8 +36,8 @@
                 <h5>Platforma sozlamalari</h5>
             </div>
             <div class="card-body">
-            <a href="<?=Url::to(['main/about'])?>"><img src="./../web/images/teamwork.png" style="width: 50px; height: 50px;"> Platforma asoschilari</a>
-              <a href="<?=Url::to(['main/logout'])?>"><img src="./../web/images/logout.png" style="width: 50px; height: 50px;"> Accountdan chiqish</a>
+            <a href="<?=Url::to(['main/about'])?>"><img src="<?=Url::base()?>/images/teamwork.png" style="width: 50px; height: 50px;"> Platforma asoschilari</a>
+              <a href="<?=Url::to(['main/logout'])?>"><img src="<?=Url::base()?>/images/logout.png" style="width: 50px; height: 50px;"> Accountdan chiqish</a>
             </div>
         </div>
     </div>

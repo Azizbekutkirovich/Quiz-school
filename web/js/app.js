@@ -18,4 +18,10 @@ if (document.URL == "http://localhost/quiz-school/") {
     $('#about').addClass('active-link');
 } else if (document.URL == "http://localhost/quiz-school/users/results") {
     $('#info').addClass('active-link');
+} else if (document.URL == "http://localhost/quiz-school/home") {
+    $('#home').addClass('active-link');
+} else if (document.URL == "http://localhost/quiz-school/settings") {
+    $('#about').addClass('active-link');
+} else if (document.URL == "http://localhost/quiz-school/results") {
+    $('#info').addClass('active-link');
 }

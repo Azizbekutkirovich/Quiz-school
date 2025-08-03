@@ -9,17 +9,18 @@
 		<?php for ($i = count($tests) - 1; $i >= 0; $i--): ?>
 			<?php
 				$teacher = $teachers[$tests[$i]["teach_id"]];
+                $test_name = $tests[$i]['test_name'];
+                $id = $tests[$i]['id'];
+                $date = date('d.m.Y', strtotime($tests[$i]['date']));
+                $time = date('H:i', strtotime($tests[$i]['date']));
 			?>
       	<div class="four col-md-6" style="margin-top: 30px;">
 	        <div class="counter-box bget" style="border-radius: 20px;">
 	          	<i class="fa-solid fa-calculator"></i>
 	          	<p style="color: white;">Test muallifi: <span style="color: red;"><?=$teacher['surname']?> <?=$teacher['name']?></span></p>
-	          	<p style="color: white;"><span style="color: red;"><?=$tests[$i]['date']?></span> da yuklangan</p>
-	        	<h3 style="color: white; display: block;"><?=$tests[$i]['test_name']?></h3>
-	        	<!-- <br><br>
-	        	<div> -->
-	        		<a href="<?=Url::to(['test/test', 'test_id' => $tests[$i]['id']])?>" class="btn btn-danger">Testni boshlash</a>
-	        	<!-- </div> -->
+	          	<p style="color: white;">Yuklangan vaqt: <span style="color: red;"><?=$date?>-yil <?=$time?></span></p>
+	        	<h3 style="color: white; display: block;"><?=$test_name?></h3>
+	        	<a href="<?=Url::to(['test/test', 'test_id' => $id])?>" class="btn btn-danger">Testni boshlash</a>
 	        </div>
       	</div>
       <?php endfor; ?>
