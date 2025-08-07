@@ -57,7 +57,7 @@ The following diagram illustrates the overall architecture of the project:
 
 - **Redis** is used as a cache layer to improve performance and prevent repeated Excel file parsing.
   - Configured in [`config/web.php`](https://github.com/Azizbekutkirovich/Quiz-school/blob/main/config/web.php) using Yii2's built-in `cache` component.
-  - No custom component is used; Yii2’s default `yii\caching\RedisCache` handles all caching logic.
+  - No custom component is written; caching is handled via the built-in Yii2 Redis integration.
   - Commonly used in the test import module to cache parsed test data temporarily.
 
 - **MinIO** is used as an S3-compatible object storage to handle uploaded Excel files.
