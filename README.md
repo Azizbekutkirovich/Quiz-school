@@ -43,9 +43,6 @@ Quiz-School replaces the entire paper process with a two-module digital platform
 - MinIO
 - Docker
 
-
----
-
 ---
 
 ## 🖼️ Architecture Diagram (Screenshot)
@@ -53,10 +50,6 @@ Quiz-School replaces the entire paper process with a two-module digital platform
 The following diagram illustrates the overall architecture of the project:
 
 ![Architecture Diagram](web/images/architecture.png)
-
----
-
----
 
 ---
 
@@ -72,7 +65,6 @@ The following diagram illustrates the overall architecture of the project:
   - The component implementation can be found in [`components/MinioComponent.php`](https://github.com/Azizbekutkirovich/Quiz-school/blob/main/components/MinioComponent.php).
   - Uploaded Excel files are directly stored in MinIO instead of the local file system to optimize storage space and support scalability.
 
----
 
 ---
 
