@@ -33,12 +33,16 @@ Quiz-School replaces the entire paper process with a two-module digital platform
 
 ## ⚙️ Tech Stack
 
-- PHP (Yii2 Basic)
-- MySQL
 - HTML
-- CSS
-- Bootstrap
+- CSS (Bootstrap 5)
 - Javascript
+- PHP 8.2
+- Yii2-basic 2.0.51
+- MySQL
+- Redis
+- MinIO
+- Docker
+
 
 ---
 
