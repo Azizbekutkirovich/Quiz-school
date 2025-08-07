@@ -46,6 +46,16 @@ Quiz-School replaces the entire paper process with a two-module digital platform
 
 ---
 
+---
+
+## 🖼️ Architecture Diagram (Screenshot)
+
+The following diagram illustrates the overall architecture of the project:
+
+![Architecture Diagram](web/images/architecture.png)
+
+---
+
 ## 🚀 How to Run Locally
 
 ```bash
