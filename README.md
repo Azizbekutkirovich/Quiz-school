@@ -1,93 +1,190 @@
-# Quiz-School (Student Panel)
+# Quiz-School
 
-Part of the **Quiz-School.uz** platform, this module is designed for school students to take electronic tests and view results instantly. It aims to digitize and simplify the traditional paper-based assessment process in schools.
+Quiz-School — платформа для перевода школьных тестов из бумажного формата в электронный. Учитель загружает файл Excel, система считывает его содержимое и преобразует вопросы и варианты ответов в тест. Учащиеся проходят назначенные им тесты онлайн, а результаты проверяются автоматически.
 
----
+Проект состоит из двух отдельных веб-приложений, работающих как единая платформа:
 
-## 🧩 Problem It Solves
+- [Quiz-School — Student Panel](https://github.com/Azizbekutkirovich/Quiz-school) — интерфейс учащихся.
+- [Quiz-School — Teacher Panel](https://github.com/Azizbekutkirovich/Quiz-school-teacher) — интерфейс учителей.
 
-In many schools, midterm tests are still paper-based — requiring teachers to print individual test sheets, manually distribute them, and later collect and evaluate handwritten answers. This process consumes excessive **time, paper, effort, and cost**.
+## Основные возможности
 
----
+### Teacher Panel
 
-## ✅ Our Solution
+- Регистрация и авторизация учителей.
+- Загрузка тестов в формате Excel.
+- Чтение и обработка содержимого Excel-файла с помощью Excel reader.
+- Преобразование данных из файла в электронный тест.
+- Просмотр и управление загруженными тестами.
+- Просмотр списка учащихся, прошедших тест.
+- Просмотр результатов и ответов каждого учащегося.
 
-Quiz-School replaces the entire paper process with a two-module digital platform:
+### Student Panel
 
-### 🧑‍🎓 Student Panel (this module)
-- Students register and log in to the platform.
-- They are shown the tests specifically assigned to their class.
-- After completing a test, results are automatically evaluated within seconds.
-- Students receive detailed feedback showing which questions were incorrect, which options they selected, and which were correct.
-- Every test attempt is saved with date and timestamp in "My Results" for future reference.
+- Регистрация и авторизация учащихся.
+- Отображение тестов, назначенных классу учащегося.
+- Прохождение тестов онлайн.
+- Автоматическая проверка ответов после отправки теста.
+- Отображение результата с указанием правильных и неправильных ответов.
+- Сохранение попыток и истории результатов с датой и временем.
 
-### 👨‍🏫 Teacher Panel (Separate Module)
-- Teachers register and upload test files in Excel format.
-- The system parses the Excel and converts it into a usable quiz format.
-- Teachers can track which students completed the test.
-- Results are displayed in tables and can be inspected in detail per student.
+## Технологический стек
 
-🔗 [Teacher Panel GitHub Repository](https://github.com/Azizbekutkirovich/Quiz-school-teacher)
+| Технология | Назначение |
+|---|---|
+| PHP 8.2 | Серверная логика |
+| Yii2 Basic 2.0.51 | PHP-фреймворк, MVC |
+| MySQL | Хранение пользователей, тестов и результатов |
+| Redis | Кэширование обработанных данных тестов |
+| MinIO | Хранение загруженных Excel-файлов |
+| AWS SDK for PHP | Взаимодействие с MinIO через S3 API |
+| Docker | Запуск инфраструктурных сервисов |
+| HTML, CSS, Bootstrap 5 | Пользовательский интерфейс |
+| JavaScript | Клиентская логика |
 
----
+## Архитектура и технические решения
 
-## ⚙️ Tech Stack
+Платформа разделена на два приложения с разными пользовательскими сценариями: Teacher Panel и Student Panel. Приложения используют общую предметную область — тесты, учащиеся и результаты прохождения.
 
-- HTML
-- CSS (Bootstrap 5)
-- Javascript
-- PHP 8.2
-- Yii2-basic 2.0.51
-- MySQL
-- Redis
-- MinIO
-- Docker
+### Обработка Excel-файлов
 
----
+1. Учитель загружает Excel-файл через Teacher Panel.
+2. Файл сохраняется в MinIO Object Storage.
+3. Excel reader считывает данные файла.
+4. Полученные вопросы и варианты ответов преобразуются в структуру электронного теста.
+5. Подготовленный тест становится доступен для прохождения учащимся соответствующего класса.
 
-## 🖼️ Architecture Diagram (Screenshot)
+В README не указывается название конкретной Excel-библиотеки: оно не подтверждено доступной документацией репозиториев.
 
-The following diagram illustrates the overall architecture of the project:
+### Кэширование через Redis
 
-![Architecture Diagram](web/images/architecture.png)
+Redis используется для временного хранения результатов обработки Excel-файлов. Это позволяет повторно использовать уже распарсенные данные и не выполнять чтение одного и того же файла при каждом обращении к тесту.
 
----
+Кэширование подключено через компонент `cache` Yii2 с использованием `yiisoft/yii2-redis`.
 
-### 🔧 Technical Details
+### Хранение файлов через MinIO
 
-- **Redis** is used as a cache layer to improve performance and prevent repeated Excel file parsing.
-  - Configured in [`config/web.php`](https://github.com/Azizbekutkirovich/Quiz-school/blob/main/config/web.php) using Yii2's built-in `cache` component.
-  - No custom component is written; caching is handled via the built-in Yii2 Redis integration.
-  - Commonly used in the test import module to cache parsed test data temporarily.
+Загруженные Excel-файлы сохраняются в MinIO, а не в локальной файловой системе приложения. MinIO совместим с S3 API и подключён через AWS SDK for PHP.
 
-- **MinIO** is used as an S3-compatible object storage to handle uploaded Excel files.
-  - Integrated as a custom Yii2 component.
-  - The component implementation can be found in [`components/MinioComponent.php`](https://github.com/Azizbekutkirovich/Quiz-school/blob/main/components/MinioComponent.php).
-  - Uploaded Excel files are directly stored in MinIO instead of the local file system to optimize storage space and support scalability.
+Реализация компонента MinIO:
 
+- [Teacher Panel — `components/MinioComponent.php`](https://github.com/Azizbekutkirovich/Quiz-school-teacher)
+- [Student Panel — `components/MinioComponent.php`](https://github.com/Azizbekutkirovich/Quiz-school)
 
----
+## Контроллеры и зоны ответственности
 
-## 🚀 How to Run Locally
+Оба приложения построены на Yii2 Basic и используют MVC-подход. Контроллеры находятся в каталоге `controllers/`.
+
+### Teacher Panel
+
+Контроллерная логика Teacher Panel отвечает за следующие операции:
+
+- Регистрация и авторизация учителей.
+- Загрузка Excel-файлов и запуск их обработки.
+- Создание и управление тестами на основе данных Excel.
+- Получение списка тестов учителя.
+- Получение списка учащихся, завершивших тест.
+- Просмотр результатов и подробных ответов учащихся.
+
+### Student Panel
+
+Контроллерная логика Student Panel отвечает за следующие операции:
+
+- Регистрация и авторизация учащихся.
+- Получение тестов, доступных классу учащегося.
+- Открытие и прохождение теста.
+- Приём и проверка отправленных ответов.
+- Формирование результата тестирования.
+- Получение истории попыток и результатов.
+
+Названия отдельных классов контроллеров здесь не перечислены, чтобы не указывать неподтверждённые имена файлов. Фактические файлы находятся в каталогах `controllers/` соответствующих репозиториев.
+
+## Локальная установка и запуск
+
+Для локального запуска необходимо развернуть оба приложения, а также настроить MySQL, Redis и MinIO.
+
+### Требования
+
+- PHP 8.2;
+- Composer;
+- MySQL;
+- Docker и Docker Compose;
+- PHP-расширения, необходимые Yii2 и используемым пакетам.
+
+### 1. Клонирование репозиториев
 
 ```bash
 git clone https://github.com/Azizbekutkirovich/Quiz-school.git
-cd quiz-school
-composer install
-# Configure database in config/db.php
-php yii migrate
-php yii serve
-
+git clone https://github.com/Azizbekutkirovich/Quiz-school-teacher.git
 ```
 
-## 📁 Related Projects
+### 2. Установка зависимостей
 
-- [Quiz-School Teacher Panel](https://github.com/Azizbekutkirovich/Quiz-school-teacher) – For teachers to upload and track tests.
+Выполните команды отдельно для каждого приложения:
 
----
+```bash
+cd Quiz-school
+composer install
+```
 
-## 👤 Author
+```bash
+cd ../Quiz-school-teacher
+composer install
+```
 
-Created by [Azizbek Utkirovich](https://github.com/Azizbekutkirovich)
+### 3. Настройка базы данных
 
-📧 Email: azizbek250607@gmail.com
+Для каждого приложения проверьте файл:
+
+```text
+config/db.php
+```
+
+Укажите параметры подключения к MySQL: адрес сервера, имя базы данных, пользователя и пароль.
+
+Создайте необходимые базы данных. Затем в каталоге каждого приложения выполните миграции:
+
+```bash
+php yii migrate
+```
+
+Если для проекта требуется отдельный SQL-дамп с начальными данными, его необходимо импортировать отдельно. Наличие такого дампа в репозиториях не подтверждено.
+
+### 4. Запуск Redis и MinIO
+
+В проекте предусмотрены `docker-compose.yml`, Redis и MinIO. Запустите инфраструктурные сервисы из каталога, где находится соответствующая конфигурация:
+
+```bash
+docker compose up -d
+```
+
+Проверьте параметры подключения к Redis и MinIO в конфигурационных файлах обоих приложений. Для MinIO также должны быть настроены endpoint, access key, secret key и bucket.
+
+### 5. Запуск приложений
+
+В первом терминале:
+
+```bash
+cd Quiz-school
+php yii serve
+```
+
+Во втором терминале:
+
+```bash
+cd Quiz-school-teacher
+php yii serve
+```
+
+Yii2 выведет локальные адреса запущенных приложений в терминале. Откройте их в браузере.
+
+## Репозитории
+
+| Модуль | Репозиторий |
+|---|---|
+| Student Panel | [Quiz-school](https://github.com/Azizbekutkirovich/Quiz-school) |
+| Teacher Panel | [Quiz-school-teacher](https://github.com/Azizbekutkirovich/Quiz-school-teacher) |
+
+## Лицензия
+
+Оба репозитория содержат лицензию BSD-3-Clause.
